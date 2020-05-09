@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1 class="entry-title">
-        <a href="single.html">Adaptive Vs. Responsive Layouts And Optimal Text Readability</a>
-    </h1>
-    {% for post in post-list %}
-        <article class="post post-{{ post.pk }}">
+{% extends 'base.html' %}
+{% load static %}
 
-        </article>
-    {% empty %}
-        <div class="no-past">暂时没有发布文章</div>
-    {% endfor %}
-</body>
-</html>
+{% block nav_index_active %}active{% endblock %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+    
+{% endblock %}

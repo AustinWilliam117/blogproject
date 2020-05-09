@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/js/bootstrap.min.js' %}">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+    <div>
+        <!-- header -->
+        <header id="bbs_header">
+            <div class="top-bar">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-forum fixed-top">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="../static/images/logo2.png" class="d-inline-block align-top" alt="">
+                        ZBTU Forum
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item {% block nav_index_active %}{% endblock %}">
+                                <a class="nav-link" href="">首页 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    新闻
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">国际新闻</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">国内新闻</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">学院新闻</a>
+                                </div>
+                            </li>
+                            <li class="nav-item {% block nav_blog_active %}{% endblock %}">
+                                <a class="nav-link" href="">博客</a>
+                            </li>
+                            <li class="nav-item {% block nav_contact_active %}{% endblock %}">
+                                <a class="nav-link" href="">联系</a>
+                            </li>
+                            <li class="nav-item {% block nav_about_active %}{% endblock %}">
+                                <a class="nav-link" href="">关于</a>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0 .mr-auto" action="">
+                            <input class="form-control mr-sm-2" type="search" name="wd" placeholder="搜索" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                        </form>
+                        <!-- <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+                            
+                        </ul> -->
+                        <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs ">
+                            {% if not user.is_authenticated %}
+                                <li class="nav-item {% block nav_register_active %}{% endblock %}">
+                                    <a class="btn btn-success" href="{% url 'register' %}?from={{ request.get_full_path }}">注册</a>
+                                </li>
+                                <li class="nav-item {% block nav_login_active %}{% endblock %}">
+                                    <a class="nav-link" href="{% url 'login' %}?from={{ request.get_full_path }}">登录</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if has_nickname %}
+                                            {{ user.username }}({{ user.get_nickname }})
+                                        {% else %}
+                                            {{ user.username }}
+                                        {% endif %}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                      <a class="dropdown-item {% block nav_user_info_active %}{% endblock %}" href="">个人资料</a>
+                                      <a class="dropdown-item" href="">发布博客</a>
+                                      {% if user.is_staff or user.is_superuser %}
+                                        <a class="dropdown-item" href="">后台管理</a>
+                                      {% endif %}
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item" href="">退出</a>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- <footer id="bbs_footer">
+            <div class="copyright">
+                <span>Welcome to visit my website © <a href="https://github.com/AustinWilliam117">AustinWilliam117</a></span>
+            </div>
+        </footer> -->
+    </div>
+</body>
+</html>
