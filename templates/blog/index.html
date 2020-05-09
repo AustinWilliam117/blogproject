@@ -6,5 +6,31 @@
 {% block title %}首页{% endblock %}
 
 {% block content %}
-    
+
+<div class="container-post-list">
+    <div class="row">
+        <div class="col-md-3 d-none d-sm-block ">11111</div>
+        <div class="col-md-6">
+            {% for post in post_list %}
+                <article>
+                    <div class="text-center post-info">
+                        <span><a href="#">{{ post.category.name }}</a></span>
+                        <span><a href="#">{{ post.created_time }}</a></span>
+                        <span><a href="#">{{ post.author }}</a></span>
+                        <span><a href="#">4 评论</a></span>
+                        <span><a href="#">588 阅读</a></span>
+                    </div>
+                    <div>
+                        <p class="text-center">{{ post.excerpt }}</p>
+                        <div class="text-center"><a href="">继续阅读</a></div>
+                    </div>
+                </article>
+            {% empty %}
+                <div>暂时还没有文章发布！</div>
+            {% endfor %}
+        </div>
+        <div class="col-md-3 d-none d-sm-block ">1111</div>
+    </div>
+</div>
+
 {% endblock %}

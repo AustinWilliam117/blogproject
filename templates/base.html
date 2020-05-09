@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/js/bootstrap.min.js' %}">
+    
+    {# bootstrap 依赖的JQuery #}
+    <script src="{% static 'bootstrap-4.4.1-dist/js/jquery/jquery.js' %}"></script>
+    {# 弹窗、下拉菜单、提示js #}
+    <script src="{% static 'bootstrap-4.4.1-dist/js/bootstrap.js' %}"></script>    
+    <script src="{% static 'bootstrap-4.4.1-dist/js/popper.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
     <title>{{ title }}</title>
 </head>
 <body>
@@ -16,7 +22,7 @@
         <header id="bbs_header">
             <div class="top-bar">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-forum fixed-top">
-                    <a class="navbar-brand" href="{% url 'index' %}">
+                    <a class="navbar-brand" href="">
                         <img src="../static/images/logo2.png" class="d-inline-block align-top" alt="">
                         ZBTU Forum
                     </a>
@@ -90,12 +96,50 @@
                 </nav>
             </div>
         </header>
-
-        <!-- <footer id="bbs_footer">
+        {% block content %}{% endblock %}
+        {# 页脚 #}
+        <footer id="bbs_footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-lg-4">
+                        <p>关于本站</p>
+                        <ul>
+                            <li>一款为郑州工商学院打造的博客网站</li>
+                            <li>基于Django+Bootstrap开发</li>
+                            <li>本站于 20202-12-01 开始建站</li>
+                            <li><a href="">阅读统计</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="col-md-3 col-lg-4">
+                        <p>友情链接</p>
+                        <ul>
+                            <li><a href="http://www.ztbu.edu.cn">学校官网</a></li>
+                            <li><a href="http://www.ztbu.edu.cn/xymap.html">校内地图</a></li>
+                            <li><a href="http://www.ztbu.edu.cn/tsg">图书馆藏</a></li>
+                            <li><a href="http://www.ztbu.edu.cn/xsc/xszzk.html">奖助学金</a></li>
+                            <li><a href="http://www.ztbu.edu.cn/jwxt.html">教务系统</a></li>
+                            <li><a href="http://www.ztbu.edu.cn/gfmt.html">官方媒体</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="col-md-3 col-lg-4">
+                        <p>意见反馈</p>
+                        <ul>
+                            <li><a href="">与我们联系</a></li>
+                            <li><a href="">隐私与 Cookie</a></li>
+                            <li><a href="">使用条款</a></li>
+                            <li><a href="">京ICP备09042378号-6</a></li>
+                            <li><a href="">京公网安备 11010802023178</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="copyright">
                 <span>Welcome to visit my website © <a href="https://github.com/AustinWilliam117">AustinWilliam117</a></span>
             </div>
-        </footer> -->
+        </footer>
+        {% block script_extends %}{% endblock %}
     </div>
 </body>
 </html>
