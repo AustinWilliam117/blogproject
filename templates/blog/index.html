@@ -7,17 +7,37 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
-{% block title %}首页{% endblock %}
+{% block title %}蒙珣的博客{% endblock %}
 
 {% block content %}
 
 <div class="container-post-list">
     <div class="row">
         <div class="col-md-2 d-none d-sm-block offset-md-1">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="..." alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="card card-avatar" style="width: 18rem;">
+                <img class="card-img-top" src="../static/images/Avatar.JPG" alt="Card image cap">
+                <div class="card-body text-center">
+                    <h4>AustinWilliam117</h4>
+                    <p class="description">我的博客，包括一些对工作、生活和学习的记录。</p>
+                    <span class="zi zi_idRec">Zhengzhou,China</span>
+                    <br><br>
+                    <ul class="card-avatar-category">
+                        <li><div>
+                            <p class="label">分类</p>
+                            <p class="number">3</p>
+                        </div></li>
+
+                        <li><div>
+                            <p class="label">归档</p>
+                            <p class="number">6</p>
+                        </div></li>
+
+                        <li><div>
+                            <p class="label">标签</p>
+                            <p class="number">10</p>
+                        </div></li>
+                    </ul>
+
                 </div>
             </div>
             <div class="card">
@@ -53,7 +73,7 @@
         <div class="col-md-2 d-none d-sm-block ">
             <div class="card">
                 <div class="card-header text-center">
-                  分类
+                  最新文章
                 </div>
                 <div class="card-body">
                   <blockquote class="blockquote mb-0">

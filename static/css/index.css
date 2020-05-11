@@ -51,3 +51,32 @@
 }
 
 /* 代码高亮结束 */
+
+/*头像框*/
+.description{
+    font-size: 14px;
+}
+
+.card-avatar-category{
+    list-style:none;
+}
+
+.card-avatar-category li{
+    float: left;
+}
+
+.card-avatar-category li:not(:first-child){
+    margin-left: 2.75em;
+}
+
+.label{
+    font-size: 11px;
+    line-height: 1.125;
+    margin-bottom: 0;
+}
+
+.number{
+    font-size: 2rem;
+    font-weight:600;
+}
+
