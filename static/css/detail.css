@@ -1,0 +1,12 @@
+.container-post-detail{
+    margin-top: 6em;
+    margin-bottom: 6em;
+}
+
+.card-body span{
+    font-size: 16px;
+}
+
+.card-body span:not(:first-child){
+    margin-left: 1em;
+}

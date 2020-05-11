@@ -3,33 +3,62 @@
 
 {% block nav_index_active %}active{% endblock %}
 
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
 {% block title %}首页{% endblock %}
 
 {% block content %}
 
 <div class="container-post-list">
     <div class="row">
-        <div class="col-md-3 d-none d-sm-block ">11111</div>
-        <div class="col-md-6">
+        <div class="col-md-3 d-none d-sm-block ">
+            <div class="card">
+                <div class="card-header">
+                  Quote
+                </div>
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                  </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 post-list">
             {% for post in post_list %}
-                <article>
-                    <div class="text-center post-info">
-                        <span><a href="#">{{ post.category.name }}</a></span>
-                        <span><a href="#">{{ post.created_time }}</a></span>
-                        <span><a href="#">{{ post.author }}</a></span>
+                <div class="card">
+                    <h5 class="card-header text-center">
+                        {{ post.title }}
+                    </h5>
+                    <div class="card-body">
+                    <h4 class="card-title text-center">
+                        <span>分类：<a href="#">{{ post.category.name }}</a></span>
+                        <span class="d-none">时间：<a href="#">{{ post.created_time }}</a></span>
+                        <span class="d-none">作者：<a href="#">{{ post.author }}</a></span>
                         <span><a href="#">4 评论</a></span>
                         <span><a href="#">588 阅读</a></span>
+                    </h4>
+                    <p class="card-text text-center">{{ post.excerpt|safe }}</p>
+                    <a href="{% url 'detail' post.pk %}" class="btn btn-primary">继续阅读</a>
                     </div>
-                    <div>
-                        <p class="text-center">{{ post.excerpt }}</p>
-                        <div class="text-center"><a href="">继续阅读</a></div>
-                    </div>
-                </article>
+                </div>
             {% empty %}
                 <div>暂时还没有文章发布！</div>
             {% endfor %}
         </div>
-        <div class="col-md-3 d-none d-sm-block ">1111</div>
+        <div class="col-md-3 d-none d-sm-block ">
+            <div class="card">
+                <div class="card-header text-center">
+                  分类
+                </div>
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                  </blockquote>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
