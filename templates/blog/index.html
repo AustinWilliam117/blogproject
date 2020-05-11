@@ -13,18 +13,21 @@
 
 <div class="container-post-list">
     <div class="row">
-        <div class="col-md-3 d-none d-sm-block ">
-            <div class="card">
-                <div class="card-header">
-                  Quote
-                </div>
+        <div class="col-md-2 d-none d-sm-block offset-md-1">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
                 <div class="card-body">
-                  <blockquote class="blockquote mb-0">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  </blockquote>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header text-center">分类</h4>
+                <div class="card-body">
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-6 post-list">
             {% for post in post_list %}
                 <div class="card">
@@ -47,7 +50,7 @@
                 <div>暂时还没有文章发布！</div>
             {% endfor %}
         </div>
-        <div class="col-md-3 d-none d-sm-block ">
+        <div class="col-md-2 d-none d-sm-block ">
             <div class="card">
                 <div class="card-header text-center">
                   分类

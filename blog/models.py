@@ -1,4 +1,5 @@
-from django.utils import timezone
+import markdown
+from django.utils.html import strip_tags
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -32,6 +33,20 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
     author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        # 首先实例化一个 Markdown 类，用于渲染 body 的文本。
+        # 由于摘要并不需要生成文章目录，所以去掉了目录拓展。
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+        ])
+
+        # 先将 Markdown 文本渲染成 HTML 文本
+        # strip_tags 去掉 HTML 文本的全部 HTML 标签
+        # 从文本摘取前 50 个字符赋给 excerpt
+        self.excerpt = strip_tags(md.convert(self.body))[:200]
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = '文章'

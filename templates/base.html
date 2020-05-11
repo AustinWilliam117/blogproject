@@ -34,20 +34,11 @@
                             <li class="nav-item {% block nav_index_active %}{% endblock %}">
                                 <a class="nav-link" href="">首页 <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    新闻
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">国际新闻</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">国内新闻</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">学院新闻</a>
-                                </div>
+                            <li class="nav-item {% block nav_category_active %}{% endblock %}">
+                                <a class="nav-link" href="">分类</a>
                             </li>
                             <li class="nav-item {% block nav_blog_active %}{% endblock %}">
-                                <a class="nav-link" href="">博客</a>
+                                <a class="nav-link" href="">归档</a>
                             </li>
                             <li class="nav-item {% block nav_contact_active %}{% endblock %}">
                                 <a class="nav-link" href="">联系</a>
@@ -135,7 +126,7 @@
                     </div>
                 </div>
             </div>
-            <div class="copyright">
+            <div class="copyright text-center">
                 <span>Welcome to visit my website © <a href="https://github.com/AustinWilliam117">AustinWilliam117</a></span>
             </div>
         </footer>
