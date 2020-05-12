@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body
                     <h4 class="card-title text-center">
-                        <span>分类：<a href="#">{{ post.category.name }}</a></span>
+                        <span>分类：<a href="{% url 'category' post.category.pk %}">{{ post.category.name }}</a></span>
                         <span>时间：<a href="#">{{ post.created_time }}</a></span>
                         <span>作者：<a href="#">{{ post.author }}</a></span>
                         <span><a href="#">4 评论</a></span>

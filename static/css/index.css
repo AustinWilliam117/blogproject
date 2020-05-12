@@ -1,3 +1,7 @@
+ul{
+    list-style-type: none;
+}
+
 .container-post-list{
     margin: 5em 1em 8em 1em;
 }
@@ -58,7 +62,7 @@
 }
 
 .card-avatar-category{
-    list-style:none;
+    list-style: none;
 }
 
 .card-avatar-category li{
