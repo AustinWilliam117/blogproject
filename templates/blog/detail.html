@@ -30,6 +30,22 @@
                     <br>
                     <blockquote class="blockquote mb-0">
                         <p>{{ post.body|safe }}</p>
+                        <div class="post-more">
+                            <span>
+                                {% if previous_post %}
+                                    <a href="{% url 'detail' previous_post.pk %}">&lt;&nbsp;{{ previous_post.title }}</a>
+                                {% else %}
+                                    这已经是第一篇了
+                                {% endif %}
+                            </span>
+                            <span>
+                                {% if next_post %}
+                                    <a href="{% url 'detail' next_post.pk %}">{{ next_post.title }}&nbsp;&gt;</a>
+                                {% else %}
+                                    这已经是最后一篇了
+                                {% endif %}
+                            </span>
+                        </div>
                     </blockquote>
                 </div>
             </div>

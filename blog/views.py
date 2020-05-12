@@ -30,6 +30,11 @@ def detail(request, pk):
     post.toc = m.group(1) if m is not None else ''
 
     context['post'] = post
+
+    # 筛选当前博客大于创建时间的博客最后一条
+    context['next_post'] = Post.objects.filter(created_time__gt=post.created_time).last()
+    # 筛选当前博客小于创建时间的博客第一条
+    context['previous_post'] = Post.objects.filter(created_time__lt=post.created_time).first()
     return render(request, 'blog/detail.html', context)
 
 # 归档
@@ -44,7 +49,9 @@ def category(request, pk):
     # 记得在开始部分导入 Category 类
     cate = get_object_or_404(Category, pk=pk)
     category_list = Post.objects.filter(category=cate).order_by('-created_time')
-    return render(request, 'blog/index.html', context={'post_list': post_list})
+    context = {}
+    context['post_category'] = cate
+    return render(request, 'blog/index.html', context)
 
 # 标签
 def tag(request, pk):

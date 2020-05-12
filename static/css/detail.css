@@ -10,3 +10,7 @@
 .card-body span:not(:first-child){
     margin-left: 1em;
 }
+
+.post-more span:last-child{
+    float: right;
+}

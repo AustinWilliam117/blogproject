@@ -78,10 +78,10 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for blog_type in blog_types %}
+                            {% for cate in post_categorys %}
                                 <li>
-                                    <a href=" {% url 'blogs_with_type' blog_type.pk %} ">
-                                        {{ blog_type.type_name }} ({{ blog_type.blog_count }})
+                                    <a href=" {% url 'category' category.pk %} ">
+                                        {{ category.name }} ({{ category.count }})
                                     </a>
                                 </li>
                             {% empty %}

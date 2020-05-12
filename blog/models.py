@@ -36,7 +36,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         # 首先实例化一个 Markdown 类，用于渲染 body 的文本。
-        # 由于摘要并不需要生成文章目录，所以去掉了目录拓展。
+        # 由于摘要并不需要生成文章目录，所以去掉了目录拓展。="ri-arrow-right-s-line" aria-hidden="true"></i>
         md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
