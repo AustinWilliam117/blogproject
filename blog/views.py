@@ -13,6 +13,7 @@ def index(request):
     context = {}
     context['post_list'] = post_list
     context['categories'] = categories
+    context['post_dates'] = Post.objects.dates("created_time", "month", order="DESC")
     return render(request, 'blog/index.html', context)
 
 def detail(request, pk):
@@ -44,7 +45,7 @@ def archive(request, year, month):
                                     created_time__month=month).order_by('-created_time')
     context = {}
     context['archive_list'] = archive_list
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/archive.html', context)
 
 # 分类
 def category(request, pk):
@@ -54,6 +55,7 @@ def category(request, pk):
     context = {}
     context['posts'] = posts
     context['category'] = category
+    context['post_dates'] = Post.objects.dates("created_time", "month", order="DESC")
     return render(request, 'blog/category.html', context)
 # 标签
 def tag(request, pk):

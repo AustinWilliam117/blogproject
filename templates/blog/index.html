@@ -117,10 +117,10 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for blog_type in blog_types %}
+                            {% for post_date in post_dates %}
                                 <li>
-                                    <a href=" {% url 'blogs_with_type' blog_type.pk %} ">
-                                        {{ blog_type.type_name }} ({{ blog_type.blog_count }})
+                                    <a href="{% url 'archive' post_date.year post_date.month %}">
+                                        {{ post_date|date:"Y-m" }} ({{ blog_type.blog_count }})
                                     </a>
                                 </li>
                             {% empty %}
@@ -129,7 +129,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                  </blockquote>
+                    </blockquote>
                 </div>
             </div>
         </div>
