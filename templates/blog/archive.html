@@ -60,6 +60,29 @@
 
             <div class="card">
                 <div class="card-header text-center">
+                  分类
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <ul>
+                            {% for category in categories %}
+                                <li>
+                                    <a href="{% url 'category' category.pk %}">
+                                        {{ category.name }}
+                                    </a>
+                                </li>
+                            {% empty %}
+                                <li>
+                                    暂无分类
+                                </li>
+                            {% endfor %}
+                        </ul>
+                  </blockquote>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header text-center">
                   归档
                 </div>
                 <div class="card-body">

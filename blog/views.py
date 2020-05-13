@@ -41,10 +41,12 @@ def detail(request, pk):
 
 # 归档
 def archive(request, year, month):
+    categories = Category.objects.all()
     posts = Post.objects.filter(created_time__year=year,
                                     created_time__month=month).order_by('-created_time')
     context = {}
     context['posts'] = posts
+    context['categories'] = categories
     context['post_archive'] = '%s年%s月' % (year,month)
     context['post_dates'] = Post.objects.dates("created_time", "month", order="DESC")
     return render(request, 'blog/archive.html', context)
