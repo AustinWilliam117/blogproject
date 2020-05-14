@@ -1,6 +1,8 @@
 import markdown,re
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
+from django.core.paginator import Paginator
+from django.conf import settings
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 
@@ -56,9 +58,30 @@ def category(request, pk):
     # 记得在开始部分导入 Category 类
     category= get_object_or_404(Category, pk=pk)
     posts = Post.objects.filter(category=category).order_by('-created_time')
+
+    # 分页器
+    paginator = Paginator(posts, settings.EACH_PAGE_BLOGS_NUMBER)
+    page_num = request.GET.get('page',1) # 获取url的页面参数（GET请求）
+    page_of_posts = paginator.get_page(page_num)
+    currentr_page_num = page_of_posts.number # 获取当前页码
+    # 获取当前页码前后各2页的页码范围
+    page_range = list(range(max(currentr_page_num-2,1), currentr_page_num)) + \
+                 list(range(currentr_page_num, min(currentr_page_num + 2, paginator.num_pages) + 1))
+    # 省略标记
+    if page_range[0] - 1 >= 2:
+        page_range.insert(0, '...')
+    if paginator.num_pages - page_range[-1] >= 2:
+        page_range.append('...')
+    # 加上首页和尾页
+    if page_range[0] != 1:
+        page_range.insert(0,1)
+    if page_range[-1] != paginator.num_pages:
+        page_range.append(paginator.num_pages)
+
     context = {}
     context['posts'] = posts
     context['category'] = category
+    context['page_range'] = page_range
     context['post_dates'] = Post.objects.dates("created_time", "month", order="DESC")
     return render(request, 'blog/category.html', context)
 # 标签
