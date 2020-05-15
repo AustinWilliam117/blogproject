@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-md-6 post-list">
-            {% for post in post_list %}
+            {% for post in page_of_posts.object_list %}
                 <div class="card">
                     <h5 class="card-header text-center">
                         {{ post.title }}

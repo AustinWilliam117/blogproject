@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/zico.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href="https://cdn.bootcss.com/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
     {# bootstrap 依赖的JQuery #}
     <script src="{% static 'bootstrap-4.4.1-dist/js/jquery/jquery.js' %}"></script>
@@ -89,47 +90,54 @@
             </div>
         </header>
         {% block content %}{% endblock %}
+        {# 分页器 #}
+            <div class="paginator">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            {# 上一页 #}
+                            {% if page_of_posts.has_previous %}
+                                <a href="?page={{ page_of_posts.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            {% else %}
+                                <span aria-hidden="true">&laquo;</span>
+                            {% endif %}
+                        </li>
+                            {# 全部页码 #}
+                            {% for page_num in page_range %}
+                                {% if page_num == page_of_blogs.number %}
+                                    <li class="active"><a href="?page={{ page_num }}"><span>{{ page_num }}</span></a></li>
+                                {% else %}
+                                    {% if page_num == "..." %}
+                                        <li><span>{{ page_num }}</span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ page_num }}"><span>{{ page_num }}</span></a></li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {# 下一页 #}
+                        <li>
+                            {% if page_of_posts.has_next %}
+                                <a href="?page={{ page_of_posts.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            {% else %}
+                                <span aria-hidden="true">&raquo;</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <p><span id="pagination-info">
+                        共有{{ page_of_posts.paginator.count }}篇博客,
+                        当前第{{ page_of_posts.number }}页，共{{  page_of_posts.paginator.num_pages }}页
+                    </span></p>
+                </nav>
+            </div>
+        </div>
         {# 页脚 #}
-        <footer id="bbs_footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-lg-4">
-                        <p>关于本站</p>
-                        <ul>
-                            <li>一款为郑州工商学院打造的博客网站</li>
-                            <li>基于Django+Bootstrap开发</li>
-                            <li>本站于 20202-12-01 开始建站</li>
-                            <li><a href="">阅读统计</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-3 col-lg-4">
-                        <p>友情链接</p>
-                        <ul>
-                            <li><a href="http://www.ztbu.edu.cn">学校官网</a></li>
-                            <li><a href="http://www.ztbu.edu.cn/xymap.html">校内地图</a></li>
-                            <li><a href="http://www.ztbu.edu.cn/tsg">图书馆藏</a></li>
-                            <li><a href="http://www.ztbu.edu.cn/xsc/xszzk.html">奖助学金</a></li>
-                            <li><a href="http://www.ztbu.edu.cn/jwxt.html">教务系统</a></li>
-                            <li><a href="http://www.ztbu.edu.cn/gfmt.html">官方媒体</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-3 col-lg-4">
-                        <p>意见反馈</p>
-                        <ul>
-                            <li><a href="">与我们联系</a></li>
-                            <li><a href="">隐私与 Cookie</a></li>
-                            <li><a href="">使用条款</a></li>
-                            <li><a href="">京ICP备09042378号-6</a></li>
-                            <li><a href="">京公网安备 11010802023178</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright text-center">
-                <span>Welcome to visit my website © <a href="https://github.com/AustinWilliam117">AustinWilliam117</a></span>
-            </div>
+        <hr>
+        <footer class="g-footer text-center">
+            <section>AustinWilliam117 Blog ©2020</section>
         </footer>
         {% block script_extends %}{% endblock %}
     </div>
