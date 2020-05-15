@@ -1,6 +1,5 @@
 ul{
     list-style: none;
-
 }
 
 .container-post-detail{
@@ -18,4 +17,13 @@ ul{
 
 .post-more span:last-child{
     float: right;
+}
+
+/* 目录 */
+.toc li:first-child{
+    list-style: none;
+}
+
+.toc ul{
+    padding-left: 1em;
 }

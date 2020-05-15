@@ -33,7 +33,7 @@ def index(request):
         page_range.append(paginator.num_pages)
 
     context = {}
-    context['post_list'] = posts
+    context['posts'] = page_of_posts.object_list
     context['page_of_posts'] = page_of_posts
     context['page_range'] = page_range
     context['categories'] = categories

@@ -94,7 +94,7 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for cate in post_categorys %}
+                            {% for category in post_categorys %}
                                 <li>
                                     <a href=" {% url 'blog:category' blog.category.pk %} ">
                                         {{ category.name }} ({{ category.count }})
