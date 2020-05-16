@@ -26,7 +26,7 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField('标题',max_length=70)
     body = models.TextField('正文')
-    created_time = models.DateTimeField('创建时间',auto_now_add=True)
+    created_time = models.DateTimeField('创建时间')
     # 最后一次修改日期
     modified_time = models.DateTimeField('修改时间',auto_now=True)
     excerpt = models.CharField('摘要',max_length=200, blank=True)

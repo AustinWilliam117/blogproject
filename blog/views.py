@@ -28,17 +28,29 @@ def get_post_list_comment_data(request,posts):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
+    # 获取日期归档对应的博客数量
+    post_dates = Post.objects.dates('created_time', 'month', order="DESC")
+    post_dates_dict = {}
+    for post_date in post_dates:
+        post_count = Post.objects.filter(created_time__year=post_date.year,
+                                         created_time__month=post_date.month).count()
+        post_dates_dict[post_date] = post_count
+
     context = {}
     context['posts'] = page_of_posts.object_list
     context['page_of_posts'] = page_of_posts
     context['page_range'] = page_range
-    context['categories'] = Category.objects.all()
-    context['post_dates'] = Post.objects.dates("created_time", "month", order="DESC")
+    context['categories'] = Category.objects.annotate(post_count=Count('post'))
+    context['post_dates'] = post_dates_dict
+    context['top10_post_list'] = Post.objects.order_by('-created_time')[0:10]
     return context
 
 def index(request):
     posts= Post.objects.all()
-    context = get_post_list_comment_data(request,posts)
+    context = get_post_list_comment_data(request, posts)
+    context['category_count'] = Category.objects.all().count()
+    context['tag_count'] = Tag.objects.all().count()
+    context['date_count'] = Post.objects.dates('created_time', 'month', order="DESC").count()
     return render(request, 'blog/index.html', context)
 
 def detail(request, pk):
@@ -89,3 +101,5 @@ def tag(request, pk):
     posts = Post.objects.filter(tags=tag).order_by('-created_time')
     context = get_post_list_comment_data(request, posts)
     return render(request, 'blog/category.html', context)
+
+

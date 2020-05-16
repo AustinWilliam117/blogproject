@@ -32,6 +32,7 @@
             {% empty %}
                 <div>暂时还没有文章发布！</div>
             {% endfor %}
+            <br>
             <span>一共有{{ posts|length }}篇文章</span>
         </div>
 
@@ -46,7 +47,7 @@
                             {% for category in post_categorys %}
                                 <li>
                                     <a href=" {% url 'blog:category' blog.category.pk %} ">
-                                        {{ category.name }} ({{ category.count }})
+                                        {{ category.name }} ({{ category.post_count }})
                                     </a>
                                 </li>
                             {% empty %}
@@ -69,7 +70,7 @@
                             {% for category in categories %}
                                 <li>
                                     <a href="{% url 'category' category.pk %}">
-                                        {{ category.name }}
+                                        {{ category.name }} ({{ category.post_count }})
                                     </a>
                                 </li>
                             {% empty %}
@@ -89,10 +90,10 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for post_date in post_dates %}
+                            {% for post_date, post_count in post_dates.items %}
                                 <li>
                                     <a href="{% url 'archive' post_date.year post_date.month %}">
-                                        {{ post_date|date:"Y-m" }} ({{ blog_type.blog_count }})
+                                        {{ post_date|date:"Y-m" }} ({{ post_count }})
                                     </a>
                                 </li>
                             {% empty %}

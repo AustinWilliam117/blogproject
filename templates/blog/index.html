@@ -24,17 +24,17 @@
                     <ul class="card-avatar-category">
                         <li><div>
                             <p class="label">分类</p>
-                            <p class="number">3</p>
+                            <p class="number">{{ category_count }}</p>
                         </div></li>
 
                         <li><div>
                             <p class="label">归档</p>
-                            <p class="number">6</p>
+                            <p class="number">{{ date_count }}</p>
                         </div></li>
 
                         <li><div>
                             <p class="label">标签</p>
-                            <p class="number">10</p>
+                            <p class="number">{{ tag_count }}</p>
                         </div></li>
                     </ul>
 
@@ -50,7 +50,7 @@
                             {% for category in categories %}
                                 <li>
                                     <a href="{% url 'category' category.pk %}">
-                                        {{ category.name }}
+                                        {{ category.name }}  ({{ category.post_count }})
                                     </a>
                                 </li>
                             {% empty %}
@@ -94,10 +94,10 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for category in post_categorys %}
+                            {% for post in top10_post_list %}
                                 <li>
-                                    <a href=" {% url 'blog:category' blog.category.pk %} ">
-                                        {{ category.name }} ({{ category.count }})
+                                    <a href="{% url 'detail' post.pk %}">
+                                        {{ post.title }}
                                     </a>
                                 </li>
                             {% empty %}
@@ -117,10 +117,10 @@
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul>
-                            {% for post_date in post_dates %}
+                            {% for post_date, post_count in post_dates.items %}
                                 <li>
                                     <a href="{% url 'archive' post_date.year post_date.month %}">
-                                        {{ post_date|date:"Y-m" }} ({{ blog_type.blog_count }})
+                                        {{ post_date|date:"Y-m" }} ({{ post_count }})
                                     </a>
                                 </li>
                             {% empty %}
@@ -136,4 +136,48 @@
     </div>
 </div>
 
+
+{# 分页器 #}
+<div class="paginator">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                {# 上一页 #}
+                {% if page_of_posts.has_previous %}
+                    <a href="?page={{ page_of_posts.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% else %}
+                    <span aria-hidden="true">&laquo;</span>
+                {% endif %}
+            </li>
+                {# 全部页码 #}
+                {% for page_num in page_range %}
+                    {% if page_num == page_of_blogs.number %}
+                        <li class="active"><a href="?page={{ page_num }}"><span>{{ page_num }}</span></a></li>
+                    {% else %}
+                        {% if page_num == "..." %}
+                            <li><span>{{ page_num }}</span></li>
+                        {% else %}
+                            <li><a href="?page={{ page_num }}"><span>{{ page_num }}</span></a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {# 下一页 #}
+            <li>
+                {% if page_of_posts.has_next %}
+                    <a href="?page={{ page_of_posts.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% else %}
+                    <span aria-hidden="true">&raquo;</span>
+                {% endif %}
+            </li>
+        </ul>
+        <p><span id="pagination-info">
+            共有{{ page_of_posts.paginator.count }}篇博客,
+            当前第{{ page_of_posts.number }}页，共{{  page_of_posts.paginator.num_pages }}页
+        </span></p>
+    </nav>
+</div>
 {% endblock %}
