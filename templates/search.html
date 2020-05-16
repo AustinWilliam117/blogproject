@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block nav_search_active %}active{% endblock %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}搜索|郑州工商论坛{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 clo-md-offset-2">
+            {% if search_words == '' %}
+                <h3>抱歉，没有搜索到相关内容！</h3>
+                <p>您可以尝试输入其他内容，例如‘感悟’</p>
+            {% else %}
+                <h3>“{{ search_words }}”已为您找到{{ search_posts_count }}个相关结果</h3>
+                <hr>
+                {% for post in page_of_posts %}
+                    <a href="{% url 'detail' post.pk %}"><h4>{{ post.title }}</h4></a>
+                    <p>{{ post.body | striptags | truncatechars_html:100 }}</p>
+                {% empty %}
+                    <p>抱歉，没有搜索到相关内容！</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <div class="row" style="display: flex; justify-content: center;">
+            {% if page_of_posts.has_previous %}
+                <a class="btn btn-primary" href="{% url 'search' %}?wd={{ search_words }}&page={{ page_of_posts.previous_page_number }}">
+                    上一页
+                </a>
+            {% endif %}
+
+            {% if page_of_posts.has_next %}
+            <a class="btn btn-primary" href="{% url 'search' %}?wd={{ search_words }}&page={{ page_of_posts.next_page_number }}">
+                下一页
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

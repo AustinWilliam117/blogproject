@@ -6,6 +6,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 
+
 from .models import Post, Category, Tag
 
 def get_post_list_comment_data(request,posts):
@@ -101,5 +102,7 @@ def tag(request, pk):
     posts = Post.objects.filter(tags=tag).order_by('-created_time')
     context = get_post_list_comment_data(request, posts)
     return render(request, 'blog/category.html', context)
+
+
 
 
