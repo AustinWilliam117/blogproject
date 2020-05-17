@@ -1,3 +1,7 @@
+a{
+    color: #4a4a4a;
+}
+
 ul{
     list-style-type: none;
     margin-bottom: 0;
@@ -74,10 +78,6 @@ li{
     float: left;
 }
 
-.card-avatar-category li:not(:first-child){
-    margin-left: 2.75em;
-}
-
 .label{
     font-size: 11px;
     line-height: 1.125;
@@ -87,5 +87,30 @@ li{
 .number{
     font-size: 2rem;
     font-weight:600;
+}
+
+/* span */
+
+.card-tag{
+    padding-left: 0;
+}
+
+.card-tag li{
+    padding-top: 0.5em;
+}
+
+.tag:not(body) {
+    align-items: center;
+    background-color: whitesmoke;
+    border-radius: 4px;
+    display: inline-flex;
+    font-size: 0.75rem;
+    height: 2em;
+    justify-content: center;
+    line-height: 1.5;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    white-space: nowrap;
+    float: right;
 }
 

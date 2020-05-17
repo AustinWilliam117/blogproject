@@ -20,6 +20,10 @@ ul{
 }
 
 /* 目录 */
+.toc a{
+    color: #5a6268;
+}
+
 .toc li:first-child{
     list-style: none;
 }
