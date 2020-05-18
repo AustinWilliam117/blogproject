@@ -1,10 +1,8 @@
 import markdown
-from django.db.models.fields import exceptions
 from django.utils.html import strip_tags
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from read_statistics.models import ReadNum
+from read_statistics.models import ReadNumExpandMethod
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
@@ -26,7 +24,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-class Post(models.Model):
+class Post(models.Model, ReadNumExpandMethod):
     title = models.CharField('标题',max_length=70)
     body = models.TextField('正文')
     created_time = models.DateTimeField('创建时间')
@@ -36,14 +34,6 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
     author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
-
-    def get_read_num(self):
-        try:
-            ct = ContentType.objects.get_for_model(Post)
-            readnum = ReadNum.objects.get(content_type=ct, object_id=self.pk)
-            return readnum.read_num
-        except exceptions.ObjectDoesNotExist:
-            return 0
 
     def save(self, *args, **kwargs):
         # 首先实例化一个 Markdown 类，用于渲染 body 的文本。

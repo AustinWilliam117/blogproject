@@ -2,6 +2,10 @@ h1,h2,h3,h4,h5,h6{
     color: #5a6268;
 }
 
+p{
+    size-font: 16px;
+}
+
 ul{
     list-style: none;
 }

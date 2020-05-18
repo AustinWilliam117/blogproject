@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 from .models import Post, Category, Tag
-from read_statistics.models import ReadNum
+from read_statistics.utils import read_statistics_once_read
 
 def get_post_list_comment_data(request,posts):
     # 分页器
@@ -56,18 +56,7 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-
-    # 阅读统计
-    if not request.COOKIES.get('post_%s_readed' % pk):
-        ct = ContentType.objects.get_for_model(Post)
-
-        if ReadNum.objects.filter(content_type=ct, object_id=post.pk).count():
-            # 如果存在记录
-            readnum = ReadNum.objects.get(content_type=ct, object_id=post.pk)
-        else:
-            readnum = ReadNum(content_type=ct, object_id=post.pk)
-        readnum.read_num += 1
-        readnum.save()
+    read_cookie_key = read_statistics_once_read(request,post)
 
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
@@ -87,7 +76,9 @@ def detail(request, pk):
     context['next_post'] = Post.objects.filter(created_time__gt=post.created_time).last()
     # 筛选当前博客小于创建时间的博客第一条
     context['previous_post'] = Post.objects.filter(created_time__lt=post.created_time).first()
-    return render(request, 'blog/detail.html', context)
+    response = render(request, 'blog/detail.html', context)
+    response.set_cookie(read_cookie_key,'true') # 阅读cookie标记
+    return response
 
 # 归档
 def archive(request, year, month):

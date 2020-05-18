@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.fields import exceptions
 
 class ReadNum(models.Model):
     read_num = models.IntegerField(default=0)
@@ -12,3 +13,14 @@ class ReadNum(models.Model):
     class Meta:
         verbose_name = '阅读数量'
         verbose_name_plural = verbose_name
+
+class ReadNumExpandMethod:
+    def get_read_num(self):
+        try:
+            ct = ContentType.objects.get_for_model(self) # self为具体Blog对象
+            readnum = ReadNum.objects.get(content_type=ct,object_id=self.pk)
+            return readnum.read_num
+        except exceptions.ObjectDoesNotExist:
+            return 0
+
+
