@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'comment.apps.CommentConfig',
+    'read_statistics.apps.ReadStatisticsConfig',
 ]
 
 MIDDLEWARE = [

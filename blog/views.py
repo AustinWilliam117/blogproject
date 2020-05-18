@@ -2,12 +2,12 @@ import markdown,re
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from django.core.paginator import Paginator
+from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
-
-
 from .models import Post, Category, Tag
+from read_statistics.models import ReadNum
 
 def get_post_list_comment_data(request,posts):
     # 分页器
@@ -56,7 +56,18 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    context = {}
+
+    # 阅读统计
+    if not request.COOKIES.get('post_%s_readed' % pk):
+        ct = ContentType.objects.get_for_model(Post)
+
+        if ReadNum.objects.filter(content_type=ct, object_id=post.pk).count():
+            # 如果存在记录
+            readnum = ReadNum.objects.get(content_type=ct, object_id=post.pk)
+        else:
+            readnum = ReadNum(content_type=ct, object_id=post.pk)
+        readnum.read_num += 1
+        readnum.save()
 
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
@@ -69,6 +80,7 @@ def detail(request, pk):
     m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
     post.toc = m.group(1) if m is not None else ''
 
+    context = {}
     context['post'] = post
 
     # 筛选当前博客大于创建时间的博客最后一条
