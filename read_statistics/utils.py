@@ -7,11 +7,12 @@ def read_statistics_once_read(request, obj):
 
     # 阅读统计
     if not request.COOKIES.get(key):
-        if ReadNum.objects.filter(content_type=ct, object_id=obj).count():
+        if ReadNum.objects.filter(content_type=ct, object_id=obj.pk).count():
             # 如果存在记录
-            readnum = ReadNum.objects.get(content_type=ct, object_id=obj)
+            readnum = ReadNum.objects.get(content_type=ct, object_id=obj.pk)
         else:
-            readnum = ReadNum(content_type=ct, object_id=obj)
+            readnum = ReadNum(content_type=ct, object_id=obj.pk)
         readnum.read_num += 1
         readnum.save()
     return key
+
