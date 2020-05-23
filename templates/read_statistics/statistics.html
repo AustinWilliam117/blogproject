@@ -4,14 +4,83 @@
 {% block nav_statistics_active %}active{% endblock %}
 
 {% block header_extends %}
-    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+
 {% endblock %}
 
 {% block title %}阅读统计{% endblock %}
 
 {% block content %}
+<br><br><br><br><br>
 <!-- DOM容器 -->
 <div id="container" style="width: 600px;height:400px;"></div>
+
+<div class="read_statistics_body">
+    <div class="statistics">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {# 今天24小时内的热门博客 #}
+                    <div class="hot-data">
+                        <h3>今天热门博客</h3>
+                        <ul>
+                            {% for hot_data in today_hot_data %}
+                                <li><a href="{% url 'detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>
+                                    ({{ hot_data.read_num }})</li>
+                            {% empty %}
+                                <li>今天没有热门博客</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {# 昨天24小时内的热门博客 #}
+                    <div class="hot-data">
+                        <h3>昨天热门博客</h3>
+                        <ul>
+                            {% for hot_data in yesterday_hot_data %}
+                                <li><a href="{% url 'detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>
+                                    ({{ hot_data.read_num }})</li>
+                            {% empty %}
+                                <li>昨天没有热门博客</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {# 七天内的热门博客 #}
+                    <div class="hot-data">
+                        <h3>七天内热门博客</h3>
+                        <ul>
+                            {% for hot_blog in week_hot_posts %}
+                                <li><a href="{% url 'detail' hot_blog.id %}">{{ hot_blog.title }}</a>
+                                    ({{ hot_blog.read_num_sum }})</li>
+                            {% empty %}
+                                <li>七天内没有热门博客</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    {# 三十天内的热门博客 #}
+                    <div class="hot-data">
+                        <h3>三十天内热门博客</h3>
+                        <ul>
+                            {% for hot_blog in month_hot_posts %}
+                                <li><a href="{% url 'detail' hot_blog.id %}">{{ hot_blog.title }}</a>
+                                    ({{ hot_blog.read_num_sum }})</li>
+                            {% empty %}
+                                <li>三十天内没有热门博客</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- 引入 highcharts.js -->
 <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
 <script>
@@ -26,6 +95,7 @@
         xAxis: {
             categories: {{ dates|safe }},   // x 轴分类
             tickmarkPlacement: 'on',
+            title: { text: '前七日阅读量变化' }
         },
         yAxis: {
             title: {
