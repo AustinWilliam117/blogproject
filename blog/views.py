@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 from .models import Post, Category, Tag
-from read_statistics.utils import read_statistics_once_read
+from read_statistics.utils import read_statistics_once_read, get_week_read_data
 
 def get_post_list_comment_data(request,posts):
     # 分页器
@@ -105,6 +105,15 @@ def tag(request, pk):
     posts = Post.objects.filter(tags=tag).order_by('-created_time')
     context = get_post_list_comment_data(request, posts)
     return render(request, 'blog/category.html', context)
+
+# 统计
+def statistics(request):
+    post_content_type = ContentType.objects.get_for_model(Post)
+    dates, read_nums = get_week_read_data(post_content_type)
+    context = {}
+    context['dates'] = dates
+    context['read_nums'] = read_nums
+    return render(request, 'read_statistics/statistics.html', context)
 
 
 

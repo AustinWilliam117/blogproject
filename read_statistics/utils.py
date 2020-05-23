@@ -1,5 +1,7 @@
+import datetime
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
+from django.db.models import Sum
 from .models import ReadNum, ReadDetail
 
 def read_statistics_once_read(request, obj):
@@ -21,4 +23,13 @@ def read_statistics_once_read(request, obj):
     return key
 
 def get_week_read_data(content_type):
-    pass
+    today = timezone.now().date()
+    dates = []
+    read_nums = []
+    for i in range(7,0,-1):
+        date = today - datetime.timedelta(days=i)
+        dates.append(date.strftime('%m/%d'))
+        read_details = ReadDetail.objects.filter(content_type=content_type, date=date)
+        result = read_details.aggregate(read_num_sum = Sum('read_num'))
+        read_nums.append(result['read_num_sum'] or 0)
+    return dates, read_nums
