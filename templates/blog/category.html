@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                        <ul>
+                        <ul class="card-tag">
                             {% for category in post_categorys %}
                                 <li>
                                     <a href=" {% url 'blog:category' blog.category.pk %} ">
@@ -66,11 +66,12 @@
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                        <ul>
+                        <ul class="card-tag">
                             {% for category in categories %}
                                 <li>
                                     <a href="{% url 'category' category.pk %}">
-                                        {{ category.name }} ({{ category.post_count }})
+                                        {{ category.name }} 
+                                        <span class="tag">{{ category.post_count }}</span>
                                     </a>
                                 </li>
                             {% empty %}
@@ -89,11 +90,12 @@
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                        <ul>
+                        <ul class="card-tag">
                             {% for post_date, post_count in post_dates.items %}
                                 <li>
                                     <a href="{% url 'archive' post_date.year post_date.month %}">
-                                        {{ post_date|date:"Y-m" }} ({{ post_count }})
+                                        {{ post_date|date:"Y-m" }} 
+                                        <span class="tag">{{ post_count }}</span>
                                     </a>
                                 </li>
                             {% empty %}

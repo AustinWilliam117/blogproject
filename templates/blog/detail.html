@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block nav_index_active %}active{% endblock %}
-
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 {% endblock %}
@@ -18,7 +16,7 @@
                 <div class="card-header text-center">
                 {{ post.title }}
                 </div>
-                <div class="card-body
+                <div class="card-body">
                     <h4 class="card-title text-center">
                         <span>分类：<a href="{% url 'category' post.category.pk %}">{{ post.category.name }}</a></span>
                         <span>时间：{{ post.created_time }}</span>
