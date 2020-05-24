@@ -19,7 +19,7 @@ def search(request):
         # 筛选：搜索
         search_posts = Post.objects.filter(condition)
 
-    # 分页
+        # 分页
     paginator = Paginator(search_posts, 10)
     page_num = request.GET.get('page', 1)
     page_of_posts = paginator.get_page(page_num)

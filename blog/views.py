@@ -1,15 +1,12 @@
 import markdown,re,datetime
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from django.db.models import Sum
 from django.core.paginator import Paginator
-from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.utils.text import slugify
-from django.utils import timezone
 from markdown.extensions.toc import TocExtension
 from .models import Post, Category, Tag
-from read_statistics.utils import read_statistics_once_read, get_week_read_data, get_today_hot_data
+from read_statistics.utils import read_statistics_once_read
 
 def get_post_list_comment_data(request,posts):
     # 分页器
@@ -107,36 +104,3 @@ def tag(request, pk):
     posts = Post.objects.filter(tags=tag).order_by('-created_time')
     context = get_post_list_comment_data(request, posts)
     return render(request, 'blog/category.html', context)
-
-# 统计
-def statistics(request):
-    post_content_type = ContentType.objects.get_for_model(Post)
-    dates, read_nums = get_week_read_data(post_content_type)
-    today_hot_data = get_today_hot_data(post_content_type)
-    context = {}
-    context['dates'] = dates
-    context['read_nums'] = read_nums
-    context['today_hot_data'] = today_hot_data
-    return render(request, 'read_statistics/statistics.html', context)
-
-def get_week_hot_posts():
-    today = timezone.now().date()
-    date = today - datetime.timedelta(days=7)
-    posts = Post.objects \
-                .filter(read_details__date__lt=today, read_details__date__gte=date) \
-                .values('id', 'title') \
-                .annotate(read_num_sum=Sum('read_details__read_num')) \
-                .order_by('-read_num_sum')
-    return posts[:7]
-
-def get_month_hot_posts():
-    today = timezone.now().date()
-    date = today - datetime.timedelta(days=30)
-    posts = Post.objects \
-                .filter(read_details__date__lt=today, read_details__date__gte=date) \
-                .values('id', 'title') \
-                .annotate(read_num_sum=Sum('read_details__read_num')) \
-                .order_by('-read_num_sum')
-    return posts[:10]
-
-

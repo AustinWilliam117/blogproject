@@ -38,16 +38,16 @@
 
         <div class="col-md-2 offset-md-1 d-none d-sm-block ">
             <div class="card">
-                <div class="card-header text-center">
+                <div class="card-header">
                   最新文章
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <ul class="card-tag">
-                            {% for category in post_categorys %}
+                            {% for post in top10_post_list %}
                                 <li>
-                                    <a href=" {% url 'blog:category' blog.category.pk %} ">
-                                        {{ category.name }} ({{ category.post_count }})
+                                    <a href="{% url 'detail' post.pk %}">
+                                        {{ post.title }}
                                     </a>
                                 </li>
                             {% empty %}

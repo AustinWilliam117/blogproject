@@ -2,7 +2,8 @@ import markdown
 from django.utils.html import strip_tags
 from django.db import models
 from django.contrib.auth.models import User
-from read_statistics.models import ReadNumExpandMethod
+from django.contrib.contenttypes.fields import GenericRelation
+from read_statistics.models import ReadNumExpandMethod, ReadDetail
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
@@ -27,6 +28,7 @@ class Tag(models.Model):
 class Post(models.Model, ReadNumExpandMethod):
     title = models.CharField('标题',max_length=70)
     body = models.TextField('正文')
+    read_details = GenericRelation(ReadDetail)
     created_time = models.DateTimeField('创建时间',auto_now=True)
     # 最后一次修改日期
     modified_time = models.DateTimeField('修改时间',auto_now=True)

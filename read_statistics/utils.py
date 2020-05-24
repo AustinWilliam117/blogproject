@@ -44,3 +44,8 @@ def get_yesterday_hot_data(content_type):
     yesterday = today - datetime.timedelta(days=1)
     read_details = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
     return read_details[:7]
+
+
+
+
+

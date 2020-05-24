@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', views.search, name='search'),
     path('',include('blog.urls')),
+    path('statistics/', include('read_statistics.urls')),
 ]
